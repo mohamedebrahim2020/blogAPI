@@ -17,7 +17,7 @@ class CreateBlogsTable extends Migration
             $table->increments('id');
             $table->string('title')->unique();
             $table->text('content');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->float("overallRate")->default(0);
             $table->bigInteger('author_id')->unsigned();
             $table->timestamps();

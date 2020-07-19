@@ -4,53 +4,45 @@ namespace App\Http\Controllers;
 
 use App\Blog;
 use App\Comment;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreCommentRequest;
 use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
 {
-    public function storeComment(Request $request ,Blog $blog){
-        
+    /**
+     * The storeComment function is used to store comment in blogblog by any user .
+     * @param  \App\Http\Requests\StoreBlogPost  $request , object of blog
+     * @return \Illuminate\Http\Response
+     */
+    public function storeComment(StoreCommentRequest $request, Blog $blog)
+    {
+
         if ($blog->exists()) {
-            
-            
+
             if ($request->comment != null  || $request->rank != null) {
-                $validatedUsername = $request->validate([
-                    'user_name' => 'required',
-                ]);
+
                 $comment = Comment::create([
-                    'comment_owner' => $request->user_name, 
+                    'comment_owner' => $request->user_name,
                     'blog_id' => $blog->id,
                 ]);
-                
-               // dd($request);
-               
-                if ($request->comment != null){
+
+                if ($request->comment != null) {
                     $comment->comment = $request->comment;
-                    
                 }
-                if ($request->rank != null){
-                    $validatedRank = $request->validate([
-                        'rank' => 'integer|between:1,5',
-                    ]);
+                if ($request->rank != null) {
                     $comment->rank = $request->rank;
-                    $avg = DB::table('comments')->where('blog_id','=',$blog->id)->avg('rank');
-                    
-                    $blog->overallRate = $avg;
-                    $blog->save();
-                    
-                    
                 }
                 $comment->save();
-                return response()->json($comment);
-            }else{
-                return response()->json('can not store  without one of comment or rank ');
+                $avg = DB::table('comments')->where('blog_id', '=', $blog->id)->avg('rank');
+                $blog->overallRate = $avg;
+                $blog->save();
+
+                return  $this->showWithRelations($blog, $blog->comments);
+            } else {
+                return $this->errorResponse('can not store  without one of comment or rank ', 422);
             }
         } else {
-            return "404";
+            return $this->errorResponse('blog is not exist', 404);
         }
-       
-        
-        
     }
 }

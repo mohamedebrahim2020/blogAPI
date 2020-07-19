@@ -2,7 +2,7 @@
 namespace App\traits;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Pagination\Paginator;
+
 
 trait ApiResponser
 

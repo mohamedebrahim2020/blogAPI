@@ -9,16 +9,16 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens , Notifiable;
+    use HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-   // protected $table =['users'];
+
     protected $fillable = [
-        'first_name','second_name', 'email', 'password','image'
+        'first_name', 'second_name', 'email', 'password', 'image',
     ];
 
     /**
@@ -38,8 +38,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function blogs(){
+    /**
+     * The has Many Relationship
+     *
+     * @var array
+     */
+    public function blogs()
+    {
         return  $this->hasMany(Blog::class);
     }
 }

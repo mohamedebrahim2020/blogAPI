@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-//use ApiResponser as GlobalApiResponser;
-
-//use apiResponser;
-
-
 use App\traits\ApiResponser;
-use Illuminate\Http\Request;
 
 class ApiController extends Controller
 {
+    /**
+     * The ApiController is extended by all controller to use ApiResponser Trait .
+     *
+     * @var array
+     */
     use ApiResponser;
 }

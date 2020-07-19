@@ -23,12 +23,13 @@ class registerUserRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
-            'first_name' => 'required|max:255',
-            'second_name' => 'required|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8|regex:/^(?=.*?[A-Z])(?=.*?[0-9]).+$/',
-            'image' => 'image|mimes:jpg,png',
+            'first_name' => 'required|min:1|max:250',
+            'second_name' => 'required|min:1|max:250',
+            'email' => 'required|email:rfc,dns|unique:users',
+            'password' => 'required|min:8|max:30|regex:/^(?=.*?[A-Z])(?=.*?[0-9]).+$/',
+            'image' => 'nullable|image|mimes:jpeg,png',
         ];
     }
 }

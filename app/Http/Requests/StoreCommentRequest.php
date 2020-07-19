@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-class StoreBlogPost extends FormRequest
+class StoreCommentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +24,9 @@ class StoreBlogPost extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|unique:blogs|max:255',
-            'content' => 'required',
-            'image' => 'required',
-            'image.*' => 'image|mimes:jpeg,png'
+            'user_name' => 'required',
+            'rank' => 'nullable|integer|between:1,5',
+
         ];
     }
 }
