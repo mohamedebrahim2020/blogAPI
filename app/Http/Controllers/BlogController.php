@@ -41,9 +41,7 @@ class BlogController extends ApiController
             $blog->save();
             return $this->showOne($blog);
 
-            if (Auth::id() == null) {
-                return $this->errorResponse('unauthorized person', 401);
-            }
+           
         }
     }
     /**
